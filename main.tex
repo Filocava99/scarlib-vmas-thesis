@@ -10,25 +10,24 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{biblatex}
+\usepackage{amsmath}
 \addbibresource{bibliography.bib} 
 
 
 \newcommand{\emailaddr}[1]{\href{mailto:#1}{\texttt{#1}}}
 
 
-\title{TITLE
+\title{Cleaning Agents with DeepQLearning
 \\
-SUBTITLE
+A perfomance comparison betwen MLP and RNN networks
 \\
 \begin{small} 
-  Report finale per il corso di ???  - 
+  Report finale per il corso di Deep Learning  - 
   LM Ingegneria e Scienze Informatiche
 \end{small}
 }
 \author{
-    \emailaddr{author1@studio.unibo.it}
-    \and
-    \emailaddr{author2@studio.unibo.it}
+    \emailaddr{filippo.cavallari2@studio.unibo.it}
 }
 \date{\today}
 
@@ -37,6 +36,206 @@ SUBTITLE
 \maketitle
 
 \newpage
+
+\begin{abstract}
+  In this report, we investigate the application of Deep Reinforcement Learning (DRL) techniques, tailored for 
+  Multilayer Perceptron (MLP) and Long Short-Term Memory Recurrent Neural Networks (LSTM RNN), within the 
+  Vectorized Multi-Agent Simulator (VMAS).
+  Our study introduces the "Cleaning Agents" scenario, where N agents are tasked with efficiently cleaning M 
+  stationary targets in a 2D space. The central goal of our research is to evaluate and compare the impact of 
+  DRL methods, specifically MLP and LSTM RNN, on agent coordination and decision-making within this scenario.
+  
+  To achieve this goal, we employ time-based performance metrics to assess the efficiency and effectiveness of 
+  these DRL variants. By quantifying the temporal aspects of agent behavior, we aim to provide practical insights 
+  into the application of DRL in multi-agent systems. This comparative analysis not only sheds light on 
+  optimizing agent behavior in diverse real-world contexts but also offers valuable guidance for selecting the 
+  most suitable DRL architecture for similar multi-agent tasks.\end{abstract}
+\newpage
+\tableofcontents
+
+% \newpage
+% \listoffigures
+
+\newpage
+
+\section{MARL}
+
+\subsection{Overview}
+A multi-agent system comprises multiple entities that, with a certain degree of independence, make decisions 
+and interact with each other within an environment [16]. Each agent is assigned a task to pursue, which can be 
+either the same as others (cooperative) or different (competitive). To address a specific task, an agent 
+requires a set of skills. Expressing these competencies programmatically would be excessively complex, if not 
+impossible. Hence, the decision was made to employ Reinforcement Learning, giving rise to the term Multi-Agent 
+Reinforcement Learning, for which the following definition can be provided:
+
+"A group of agents collectively learns the best policy to maximize a long-term reward function."
+
+\subsection{Environment}
+These two characteristics introduce complexities compared to Single-Agent Reinforcement 
+Learning (SARL). In SARL, the learning process is modeled as a Markov Decision Process (MDP),
+ which is inherently stationary by definition. Consequently, SARL inherently assumes a single
+  agent engaged in the learning process, with the remaining agents considered as part of the 
+  environment.
+
+In the case of MARL, Reinforcement Learning is integrated using an additional abstraction 
+known as Stochastic Game S (or Markov Games) [10]:
+
+\newpage
+
+\section{Deep Q-Learning}
+
+\subsection{Overview}
+
+Deep Q-Learning (DQL) represents a significant advancement in the field of Reinforcement Learning (RL) by combining Q-Learning principles with deep neural networks. This chapter provides a comprehensive exploration of DQL, covering its core concepts, underlying algorithms, the Bellman equation, and practical applications.
+
+\subsection{Background}
+
+\subsubsection{Reinforcement Learning}
+
+Reinforcement Learning is a machine learning paradigm focused on training agents to make sequences of decisions within an environment to maximize cumulative rewards. It has gained popularity in various domains, including robotics, gaming, recommendation systems, and autonomous navigation.
+
+\subsubsection{Q-Learning}
+
+Q-Learning is a foundational RL algorithm that learns an action-value function, denoted as $Q(s, a)$, to estimate the expected cumulative reward an agent can achieve by taking a specific action $a$ in a given state $s$ and following an optimal policy. It employs an iterative update rule to refine these Q-values until they converge to the optimal values.
+
+\subsection{Deep Q-Learning Basics}
+
+\subsubsection{The Q-Function}
+
+In DQL, the Q-function is represented as a deep neural network. This network takes the current state $s$ as input and outputs a Q-value for each possible action $a$. The agent selects the action with the highest Q-value, guiding its decision-making process.
+
+\subsubsection{Q-Loss Function}
+
+To train the deep Q-network (DQN), a loss function is defined to measure the discrepancy between predicted Q-values and target Q-values. The loss function aims to minimize the difference between the predicted and target Q-values.
+
+The Q-learning loss is typically calculated as follows:
+\[
+L(\theta) = \mathbb{E}\left[(Q(s, a;\theta) - (r + \gamma \max_{a'}Q(s', a';\theta^-))^2\right]
+\]
+where:
+\begin{align*}
+L(\theta) & \text{ is the loss with respect to the network's parameters }\theta. \\
+Q(s, a;\theta) & \text{ is the predicted Q-value for state }s\text{ and action }a\text{ with network parameters }\theta. \\
+r & \text{ is the immediate reward received after taking action }a\text{ in state }s. \\
+\gamma & \text{ is the discount factor that determines the importance of future rewards.} \\
+s' & \text{ is the next state after taking action }a\text{ in state }s. \\
+\theta^- & \text{ are the parameters of the target Q-network.}
+\end{align*}
+
+\subsubsection{Experience Replay}
+
+One of the critical components of DQL is experience replay. It involves storing a replay buffer of past experiences $(s, a, r, s')$ (state, action, reward, next state) and sampling mini-batches from it during training. Experience replay helps stabilize training and breaks the temporal correlations present in sequential data.
+
+\subsubsection{Target Network}
+
+To further stabilize training, DQL employs a target network, which is a copy of the Q-network with delayed updates. The target network provides a stable Q-value target for the loss calculation.
+
+\subsubsection{Exploration vs. Exploitation}
+
+Balancing exploration (trying new actions) and exploitation (choosing the best-known action) is essential in DQL. The $\epsilon$-greedy policy is commonly used, where the agent selects the best action with probability $(1-\epsilon)$ and explores with probability $\epsilon$.
+
+\subsection{The Bellman Equation for Q-Value Approximation}
+
+The Bellman equation plays a crucial role in Q-Learning and DQL. It expresses the Q-value of a state-action pair as the sum of the immediate reward and the discounted maximum Q-value of the next state-action pair:
+
+\[
+Q(s, a) = r + \gamma \max_{a'} Q(s', a')
+\]
+
+Where:
+\begin{align*}
+Q(s, a) & \text{ is the Q-value of state }s\text{ and action }a. \\
+r & \text{ is the immediate reward for taking action }a\text{ in state }s. \\
+\gamma & \text{ is the discount factor determining the importance of future rewards.} \\
+s' & \text{ is the next state resulting from taking action }a\text{ in state }s. \\
+\max_{a'} Q(s', a') & \text{ represents the maximum Q-value achievable in the next state }s'\text{ considering all possible actions }a'.
+\end{align*}
+
+\subsection{DQL Algorithm}
+
+The core DQL algorithm can be summarized in several steps:
+
+\begin{enumerate}
+\item Initialize Q-network and target network with random weights.
+\item Initialize replay buffer.
+\item For each episode:
+   \begin{enumerate}
+   \item Observe the current state $s$.
+   \item Select an action $a$ using $\epsilon$-greedy policy.
+   \item Execute action $a$, observe reward $r$ and next state $s'$.
+   \item Store the experience $(s, a, r, s')$ in the replay buffer.
+   \item Sample a mini-batch from the replay buffer.
+   \item Calculate the target Q-values using the target network.
+   \item Calculate the loss between predicted and target Q-values using the Bellman equation.
+   \item Update the Q-network weights using backpropagation.
+   \item Periodically update the target network weights.
+   \item Repeat until convergence or a predetermined number of episodes.
+   \end{enumerate}
+\end{enumerate}
+
+\subsection{Challenges and Improvements}
+
+While DQL has achieved remarkable success, it faces challenges such as training instability, Q-value overestimation, and the need for extensive data collection. Researchers have proposed various improvements, including Double DQN, Prioritized Experience Replay, and Dueling DQN, to address these issues.
+
+\subsection{Applications of Deep Q-Learning}
+
+DQL has been successfully applied to a wide range of problems, including but not limited to:
+
+\begin{enumerate}
+\item \textbf{Atari Games}: DQL achieved human-level performance on various Atari 2600 games, demonstrating its capability to learn complex strategies.
+\item \textbf{Robotics}: DQL has been used to train robots for tasks like object manipulation, navigation, and control.
+\item \textbf{Autonomous Vehicles}: DQL is employed in training autonomous vehicles for safe and efficient navigation.
+\item \textbf{Recommendation Systems}: It is utilized to optimize recommendations for users on online platforms.
+\item \textbf{Healthcare}: DQL is applied for optimizing treatment plans and resource allocation in healthcare.
+\end{enumerate}
+
+\newpage
+
+\section{Vectorized Multi-Agent Simulator (VMAS)}
+
+\subsection{Overview}
+
+VMAS is a sophisticated framework tailored for Multi-Agent Reinforcement Learning (MARL) applications. It offers a unique blend of features and capabilities, making it a valuable tool for researchers and practitioners in the field.
+
+\subsection{Overview}
+
+VMAS seamlessly combines two key advantages: vectorization and 2D physics simulation, all implemented within the PyTorch framework. Its primary purpose is to provide a diverse set of twelve complex multi-robot scenarios, each meticulously designed to present distinct challenges to state-of-the-art MARL algorithms. What sets VMAS apart is its user-friendly and modular interface, which simplifies the creation of new scenarios, fostering community contributions and collaborative development.
+
+\subsection{Vectorized Simulation Engine}
+
+One of VMAS's standout features is its highly efficient vectorized simulation engine. This engine empowers parallel simulations to run effortlessly on accelerated hardware, even at an extensive scale. Unlike traditional frameworks like OpenAI Multi-Agent Particle Environment (MPE), which exhibit linear increases in execution time as the number of simulations grows, VMAS excels. It can execute an impressive 30,000 parallel simulations in under 10 seconds, marking a performance improvement of more than 100 times.
+
+\subsection{Challenging Scenarios}
+
+VMAS is bundled with a diverse array of scenarios, each carefully crafted to challenge MARL algorithms in various ways. These scenarios feature agents and landmarks of different shapes, support rotations, incorporate elastic collisions, utilize joints, and permit custom gravity settings. The motion models for agents within VMAS are holonomic, streamlining the simulation process. Moreover, VMAS offers support for custom sensors, including LIDARs, and facilitates inter-agent communication. This breadth of scenarios opens up opportunities for exploring a wide spectrum of multi-robot coordination tasks.
+
+\newpage
+
+\section{Cleaning Agents Scenario}
+
+The "Cleaning Agents" scenario within the Vectorized Multi-Agent Simulator (VMAS) presents a challenging multi-agent reinforcement learning (MARL) environment. In this scenario, a team of N agents is tasked with cleaning a 2D space by removing M stationary targets. This scenario serves as a valuable benchmark for evaluating the coordination and decision-making capabilities of MARL algorithms.
+
+\subsection{Agents and Sensors}
+
+Each agent in the "Cleaning Agents" scenario is equipped with a specialized LIDAR sensor that projects 50 rays into the environment. This sensor is designed to detect only targets within its range. The purpose of the LIDAR sensor is to enable agents to perceive the presence and location of targets, crucial for their cleaning task.
+
+\subsection{Objective}
+
+The primary goal of the agents in this scenario is to efficiently remove all M targets from the 2D space. To successfully remove a target, an agent must be in close proximity to it, ensuring effective cleaning. This proximity requirement adds complexity to the task, as agents must navigate and coordinate to reach and clean targets efficiently.
+
+\subsection{Reward Function}
+
+The reward function in the "Cleaning Agents" scenario is designed to encourage agents to make optimal decisions while cleaning the targets. The reward function operates as follows:
+\begin{enumerate}
+  \item When an agent's distance from a target falls below a predefined threshold (K), indicating successful cleaning, the agent is rewarded positively. The reward is computed as 1 plus the number of previously removed targets, promoting agents to clean multiple targets sequentially.
+  \item If an agent's LIDAR sensor does not detect any targets in its vicinity, it receives a negative reward (-1). This negative reward serves as an incentive for agents to explore the environment actively, preventing them from remaining stationary.
+  \item When an agent's LIDAR sensor detects a target, and the distance from the agent's previous position to the target decreases, the agent is rewarded. The reward is determined by the function $f(x) = -\text{LIDAR range}/x$, where $x$ represents the distance reduction. The calculated reward is then normalized to fall within the range of -0.5 to 0.
+  \item Conversely, if the distance from the agent's previous position to the target increases, indicating a suboptimal move, the agent is penalized. The penalty is based on the same function $f(x) = -\text{LIDAR range}/x$, with the resulting value normalized between -1 and -0.5. This penalty discourages agents from taking actions that lead away from targets.
+\end{enumerate}
+The strategic use of negative rewards, except for successful target removal, ensures that agents are motivated to make coordinated and efficient moves. It encourages agents to continually improve their performance by minimizing suboptimal actions and maximizing successful cleaning operations.
+
+The "Cleaning Agents" scenario in VMAS thus presents a dynamic and challenging environment that tests the coordination, navigation, and decision-making capabilities of MARL algorithms in the context of multi-agent systems.
+
 
 \addcontentsline{toc}{section}{Bibliography}
 %\bibliographystyle{unsrt}
