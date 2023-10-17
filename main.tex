@@ -31,8 +31,8 @@
 A perfomance comparison betwen MLP and RNN networks
 \\
 \begin{small} 
-  Report finale per il corso di Deep Learning  - 
-  LM Ingegneria e Scienze Informatiche
+  Final report for the course of Intelligent Systems Engineering  - 
+  MS Engineering and Computer Science
 \end{small}
 }
 \author{
@@ -72,8 +72,8 @@ A perfomance comparison betwen MLP and RNN networks
 A multi-agent system comprises multiple entities that, with a certain degree of independence, make decisions 
 and interact with each other within an environment \cite{weiss1999multiagent}. Each agent is assigned a task to pursue, which can be 
 either the same as others (cooperative) or different (competitive). To address a specific task, an agent 
-requires a set of skills. Expressing these competencies programmatically would be excessively complex, if not 
-impossible. Hence, the decision was made to employ Reinforcement Learning, giving rise to the term Multi-Agent 
+requires a set of skills. Expressing these competencies programmatically would be particularly complex. Hence, the decision was made to employ Reinforcement Learning, 
+giving rise to the term Multi-Agent 
 Reinforcement Learning, for which the following definition can be provided:
 
 "A group of agents collectively learns the best policy to maximize a long-term reward function."
@@ -91,7 +91,7 @@ known as Stochastic Game S (or Markov Games) \cite{LITTMAN1994157}:
 \begin{itemize}
   \item $\mathcal{S}$ is a tuple $<N, S, \{A^i\}, P,  \{R^i\}>$ with $i \in 1..N$
   \item N is the number of agents (must be greaten than 1 but has no upper-bound)
-  \item S is the global state of the environment
+  \item S is always a space of values that represent the global state of the system
   \item $A^i$ is the action space of the i-th agent
   \begin{itemize}
        \item The global space is defined as $\mathbb{A} = A^1 \times A^2 \times .... \times A^N$
@@ -122,7 +122,7 @@ known as Stochastic Game S (or Markov Games) \cite{LITTMAN1994157}:
 \end{boxK}
 
 \subsubsection{Types of MARL}
-MARL systems can be categorized in various ways, and one primary division is as follows:
+MARL systems can be categorized in various ways, and one primary division is as follows \cite{4445757}:
 
 % \begin{figure}
 %     \centering
@@ -132,7 +132,7 @@ MARL systems can be categorized in various ways, and one primary division is as 
 \begin{itemize}
     \item \textbf{\textit{Cooperative}}: In cooperative MARL, all agents within the system share the same goal, and consequently, the same reward function $(R^1 = ... = R^i = ... = R^N)$.
     \begin{itemize}
-        \item \textbf{\textit{Homogeneous}}: In homogeneous cooperative MARL, all agents have identical capabilities $(A^1 = ... = A^i = ... = A^N)$. The overall objective is to find the best policy, which is the same for each agent $(\pi^* = \pi^*_1 = ... = \pi^*_N)$.
+        \item \textbf{\textit{Homogeneous}}: In homogeneous cooperative MARL, all agents have identical capabilities $(A^1 = ... = A^i = ... = A^N)$; the overall objective is to find the best policy. % which is usually the same for each agent $(\pi^* = \pi^*_1 = ... = \pi^*_N)$.
         \item \textbf{\textit{Heterogeneous}}: In heterogeneous cooperative MARL, agents may possess varying capabilities, and in the worst-case scenario, each agent has different capabilities from all others $(A^1 \neq ... \neq A^i \neq ... \neq A^N)$. The global objective is to maximize each agent's local policy while pursuing the shared goal.
     \end{itemize}
     \item \textbf{\textit{Competitive}}: Competitive MARL involves agents with different goals who compete to maximize their own reward functions. A typical example of such systems is board games.
@@ -147,33 +147,36 @@ Further division can be made based on how the training and execution of various 
 % \end{figure}
 
 \begin{itemize}
-    \item \textbf{\textit{Centralized Training Centralized Execution}}: In this type of system, a higher-level "Learner" agent with a global perspective is responsible for training and computing actions. The remaining agents send their local environment perceptions (local states) to the Learner agent, who reconstructs the global state. The Learner agent then selects actions according to the current policy, evaluates reward functions, and updates the policy (learning process). This approach is typically used for offline training of the system.
-    
     \begin{figure}
     \centering
     \includegraphics[width=8cm]{img/CTCE.png}
     \caption{CTCE System \cite{aguzzi}}
+    \label{fig:a}
     \end{figure}
-    
-    \item \textbf{\textit{Decentralized Training Decentralized Execution}}: In this type of system, each agent has its local policy and can only perceive a portion of the environment. Each agent takes actions based on its perception of the environment, updating its local reward function accordingly. This approach is used for both offline training and online deployment of the system.
+
+    \item \textbf{\textit{Centralized Training Centralized Execution}} [\ref{fig:a}]: In this type of system, a higher-level "Learner" agent with a global perspective is responsible for training and computing actions. The remaining agents send their local environment perceptions (local states) to the Learner agent, who reconstructs the global state. The Learner agent then selects actions according to the current policy, evaluates reward functions, and updates the policy (learning process). This approach is typically used for offline training of the system.
     
     \begin{figure}
     \centering
     \includegraphics[width=8cm]{img/DTDE.png}
     \caption{DTDE System \cite{aguzzi}}
+    \label{fig:b}
     \end{figure}
+
+    \item \textbf{\textit{Decentralized Training Decentralized Execution}} [\ref{fig:b}]: In this type of system, each agent has its local policy and can only perceive a portion of the environment. Each agent takes actions based on its perception of the environment, updating its local reward function accordingly. This approach is used for both offline training and online deployment of the system.
     
-    \item \textbf{\textit{Centralized Training Decentralized Execution}}: In this type of system, two distinct steps are involved:
+    \begin{figure}
+      \centering
+      \includegraphics[width=8cm]{img/CTDE.png}
+      \caption{CTDE System \cite{aguzzi}}
+      \label{fig:c}
+      \end{figure}
+    
+    \item \textbf{\textit{Centralized Training Decentralized Execution}} [\ref{fig:c}]: In this type of system, two distinct steps are involved:
     \begin{enumerate}
         \item \textbf{\textit{Simulation Time}}: Each agent uses its local policy, and at the end of each episode, they send their respective information to a central Learner agent. This Learner agent, with a global view of the environment, updates the local policies of the various agents.
         \item \textbf{\textit{Execution Time}}: During this phase, each agent uses its local policy (resulting from the training process) to interact with the environment.
     \end{enumerate}
-    
-    \begin{figure}
-    \centering
-    \includegraphics[width=8cm]{img/CTDE.png}
-    \caption{CTDE System \cite{aguzzi}}
-    \end{figure}
     
 \end{itemize}
 
@@ -184,7 +187,7 @@ Further division can be made based on how the training and execution of various 
 
 \subsection{Overview}
 
-Deep Q-Learning (DQL) represents a significant advancement in the field of Reinforcement Learning (RL) by combining Q-Learning principles with deep neural networks. This chapter provides a comprehensive exploration of DQL, covering its core concepts, underlying algorithms, the Bellman equation, and practical applications.
+Deep Q-Learning (DQL) represents a significant advancement in the field of Reinforcement Learning (RL) by combining Q-Learning principles with deep neural networks. This chapter provides a comprehensive exploration of DQL, covering its core concepts, underlying algorithms, the Bellman equation, and practical applications \cite{DBLP:journals/corr/MnihKSGAWR13}.
 
 \subsection{Background}
 
@@ -246,7 +249,8 @@ Q(s, a) & \text{ is the Q-value of state }s\text{ and action }a. \\
 r & \text{ is the immediate reward for taking action }a\text{ in state }s. \\
 \gamma & \text{ is the discount factor determining the importance of future rewards.} \\
 s' & \text{ is the next state resulting from taking action }a\text{ in state }s. \\
-\max_{a'} Q(s', a') & \text{ represents the maximum Q-value achievable in the next state }s'\text{ considering all possible actions }a'.
+\max_{a'} Q(s', a') & \text{ represents the maximum Q-value achievable in the next state }s' \\
+\text{ considering all possible actions }a'.
 \end{align*}
 
 \subsection{DQL Algorithm}
@@ -325,10 +329,14 @@ The primary goal of the agents in this scenario is to efficiently remove all M t
 
 The reward function in the "Cleaning Agents" scenario is designed to encourage agents to make optimal decisions while cleaning the targets. The reward function operates as follows:
 \begin{enumerate}
-  \item When an agent's distance from a target falls below a predefined threshold (K), indicating successful cleaning, the agent is rewarded positively. The reward is computed as 1 plus the number of previously removed targets, promoting agents to clean multiple targets sequentially.
-  \item If an agent's LIDAR sensor does not detect any targets in its vicinity, it receives a negative reward (-1). This negative reward serves as an incentive for agents to explore the environment actively, preventing them from remaining stationary.
-  \item When an agent's LIDAR sensor detects a target, and the distance from the agent's previous position to the target decreases, the agent is rewarded. The reward is determined by the function $f(x) = -\text{LIDAR range}/x$, where $x$ represents the distance reduction. The calculated reward is then normalized to fall within the range of -0.5 to 0.
-  \item Conversely, if the distance from the agent's previous position to the target increases, indicating a suboptimal move, the agent is penalized. The penalty is based on the same function $f(x) = -\text{LIDAR range}/x$, with the resulting value normalized between -1 and -0.5. This penalty discourages agents from taking actions that lead away from targets.
+  \item When an agent's distance from a target falls below a predefined threshold (K), indicating successful cleaning, the agent is rewarded positively:
+  Reward = $1 + \text{number of previously removed targets}$
+  \item If an agent's LIDAR sensor does not detect any targets in its vicinity, it receives a negative reward (-1):
+  Reward = $-1$
+  \item When an agent's LIDAR sensor detects a target, and the distance from the agent's previous position to the target decreases, the agent is rewarded based on the function:
+  Reward = $\frac{-\text{LIDAR range}}{x}$ (normalized to fall within the range of -0.5 to 0)
+  \item Conversely, if the distance from the agent's previous position to the target increases, indicating a suboptimal move, the agent is penalized based on the same function:
+  Reward = $\frac{-\text{LIDAR range}}{x}$ (normalized to fall within the range of -1 to -0.5)
 \end{enumerate}
 The strategic use of negative rewards, except for successful target removal, ensures that agents are motivated to make coordinated and efficient moves. It encourages agents to continually improve their performance by minimizing suboptimal actions and maximizing successful cleaning operations.
 
@@ -348,20 +356,20 @@ One of the fundamental challenges in employing LSTM networks is the requirement 
 I have extended the functionality of the Replay Buffer. In my modified setup, states are no longer solely composed of LIDAR 
 measurements but are now augmented with the action taken by the agent and the corresponding reward received.
 
-To feed sequences of states into the LSTM network, we require N consecutive states. We accomplish this by selecting the N-1 states 
+To feed sequences of states into the LSTM network, I require N consecutive states. I accomplish this by selecting the N-1 states 
 stored in the Replay Buffer, which were observed before the current state. The current state, however, does not yet possess an 
-associated action and reward, as it awaits processing by the behavioral policy. To accommodate this, we initialize tensors of the 
+associated action and reward, as it awaits processing by the behavioral policy. To accommodate this, I initialize tensors of the 
 appropriate shape, filled with zeros, representing no action performed and no reward received.
 
 \subsubsection{Generating Sequences for Network Improvement}
 
-To train the LSTM-based DQL effectively, we need to generate batches of sequences that preserve the temporal structure of the data. This ensures that the LSTM can learn and generalize from the sequential patterns in the state-action-reward sequences.
+To train the LSTM-based DQL effectively, I need to generate batches of sequences that preserve the temporal structure of the data. This ensures that the LSTM can learn and generalize from the sequential patterns in the state-action-reward sequences.
 
-To achieve this, we employ a two-step process. First, we randomly select a BATCH SIZE number of lists of consecutive random indices from the Replay Buffer. These indices are used to retrieve the corresponding states from the Replay Buffer, forming sequences that encapsulate the temporal progression of the agent's experiences.
+To achieve this, I employ a two-step process. First, I randomly select a BATCH SIZE number of lists of consecutive random indices from the Replay Buffer. These indices are used to retrieve the corresponding states from the Replay Buffer, forming sequences that encapsulate the temporal progression of the agent's experiences.
 
 However, it's crucial to note that this approach necessitates populating the Replay Buffer with a substantial amount of data initially. This implies that a substantial number of steps, determined by the hyperparameter settings, must be taken before initiating the network improvement process. This initial data collection phase is essential for providing sufficient training samples that enable the LSTM network to effectively capture and learn from temporal dependencies in the agent's experiences.
 
-In summary, our custom implementation for LSTM RNN networks extends the capabilities of traditional DQL by incorporating LSTM networks to handle temporal dependencies. This adaptation includes modifying the state representation in the Replay Buffer and introducing a strategy for generating batches of sequences for network improvement. While it requires an initial data collection phase, the result is a powerful and flexible framework for addressing complex decision-making tasks in dynamic environments.
+In summary, my custom implementation for LSTM RNN networks extends the capabilities of traditional DQL by incorporating LSTM networks to handle temporal dependencies. This adaptation includes modifying the state representation in the Replay Buffer and introducing a strategy for generating batches of sequences for network improvement. While it requires an initial data collection phase, the result is a powerful and flexible framework for addressing complex decision-making tasks in dynamic environments.
 
 \subsection{Deep Q Learning for MLP Networks}
 
@@ -371,52 +379,22 @@ environments and agents, necessitating a flexible approach to handle complex ten
 
 \subsubsection{State Representation}
 
-In such implementation, we employ a state representation that aligns with the structure of VMAS. Specifically, the state of each agent is represented as a tensor of shape [50, 1]. This choice is informed by the fact that each agent's LIDAR sensor in VMAS emits 50 rays, returning float distances. The positions of the individual agents within the environment are not considered relevant for decision-making since agents rely solely on LIDAR measurements, and the positions of targets can vary across different VMAS environments.
+In such implementation, I employ a state representation that aligns with the structure of VMAS. Specifically, the state of each agent is represented as a tensor of shape [50, 1]. This choice is informed by the fact that each agent's LIDAR sensor in VMAS emits 50 rays, returning float distances. The positions of the individual agents within the environment are not considered relevant for decision-making since agents rely solely on LIDAR measurements, and the positions of targets can vary across different VMAS environments.
 
 \subsubsection{Tensor Shapes}
 
-To facilitate the training and execution of the MLP networks within VMAS, our network architecture accommodates tensors with the shape [number of environments, number of agents, 50, 1]. This tensor shape aligns with VMAS's parallelized structure, allowing the network to process data from multiple environments and agents simultaneously.
+To facilitate the training and execution of the MLP networks within VMAS, my network architecture accommodates tensors with the shape [number of environments, number of agents, 50, 1]. This tensor shape aligns with VMAS's parallelized structure, allowing the network to process data from multiple environments and agents simultaneously.
 
-By adapting our DQL implementation to handle tensors of complex shapes, we ensure seamless integration with VMAS's multi-agent framework. This flexibility enables agents to effectively learn and make decisions within the dynamic and parallelized VMAS environment, ultimately enhancing their performance in complex multi-agent tasks.
+By adapting my DQL implementation to handle tensors of complex shapes, I ensure seamless integration with VMAS's multi-agent framework. This flexibility enables agents to effectively learn and make decisions within the dynamic and parallelized VMAS environment, ultimately enhancing their performance in complex multi-agent tasks.
 
 \newpage
 
 \section{Results}
 \subsection{Performance Results: MLP Networks in the Cleaning Agents Scenario}
 
-The performance evaluation of our Multilayer Perceptron (MLP) network-based agents in the Cleaning Agents scenario provides valuable insights into their learning and decision-making capabilities. The training process consisted of 150 epochs, each comprising 1000 steps. If an agent successfully achieved its task before completing all the steps in an epoch, it proceeded to the next epoch. Here, I present a comprehensive analysis of the training and evaluation results.
+The performance evaluation of my Multilayer Perceptron (MLP) network-based agents in the Cleaning Agents scenario provides valuable insights into their learning and decision-making capabilities. The training process consisted of 150 epochs, each comprising 1000 steps. If an agent successfully achieved its task before completing all the steps in an epoch, it proceeded to the next epoch. Here, I present a comprehensive analysis of the training and evaluation results.
 
 \subsubsection{Training Progress}
-
-During the initial epoch, agents exhibited limited familiarity with the task of removing targets from the 2D environment. Consequently, the mean reward achieved by the agents in this phase remained relatively low, with a maximum reward of approximately 3.0. As training progressed, agents displayed improved performance. By the 70th epoch, the highest recorded mean reward reached 8.0, typically occurring at around 900 steps into the episode. This milestone indicated that agents had grasped the fundamentals of their task but still had room for refinement.
-
-A significant leap in performance was observed at the 145th epoch. Agents demonstrated remarkable efficiency by removing almost all targets in fewer than 500 steps, with the last remaining target eliminated in the final steps of the episode. Concurrently, the loss function exhibited a notable pattern. While initially showing spikes when agents were rewarded values exceeding 1.0, the loss gradually minimized and stabilized near zero after the 100th epoch.
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{img/mean_reward_1_epoch.png}
-      \caption{Mean Reward Epoch 1}
-      \label{fig:s_mer}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{img/mean_reward_70_epoch.png}
-      \caption{Mean Reward Epoch 70}
-      \label{fig:s_mel}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{img/mean_reward_145_epoch.png}
-      \caption{Mean Reward Epoch 145} 
-      \label{fig:s_ser}
-  \end{subfigure}
-  \caption{Mean rewards}
-  \label{fig:t}
-\end{figure}
 
 \begin{figure}
   \centering
@@ -424,41 +402,63 @@ A significant leap in performance was observed at the 145th epoch. Agents demons
       \centering
       \includegraphics[width=\textwidth]{img/rewards_50_epochs.png}
       \caption{Total reward after 50 epochs}
-      \label{fig:s_mer}
+      \label{fig:g}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/loss_50_epochs.png}
       \caption{Total loss after 50 epochs}
-      \label{fig:s_mel}
+      \label{fig:h}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/rewards.png}
       \caption{Total reward after 150 epochs} 
-      \label{fig:s_ser}
+      \label{fig:i}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/loss.png}
       \caption{Total loss after 150 epochs} 
-      \label{fig:s_msps}
+      \label{fig:l}
   \end{subfigure}
   \caption{Reward and Loss comparison}
   \label{fig:s}
 \end{figure}
 
-\subsubsection{Evaluation Results}
+During the initial epoch, agents exhibited limited familiarity with the task of removing targets from the 2D environment. Consequently, the mean reward achieved by the agents in this phase remained relatively low, with a maximum reward of approximately 3.0. As training progressed, agents displayed improved performance [\ref{fig:g}]. By the 70th epoch, the highest recorded mean reward reached 8.0, typically occurring at around 900 steps into the episode. This milestone indicated that agents had grasped the fundamentals of their task but still had room for refinement.
 
-To assess the agents' performance in practical scenarios, we conducted evaluations with varying numbers of agents and targets. In a scenario involving one agent and eight targets, the results indicated the following:
-\begin{itemize}
-  \item On average, it took approximately 10 steps for the agent to remove the first target, reflecting a quick initiation of the cleaning process.
-  \item Removal of half the targets occurred, on average, in approximately 170 steps, demonstrating consistent progress.
-  \item To remove all eight targets, agents required an average of around 1440 steps, highlighting the complexity of clearing the entire environment.
-\end{itemize}
+A significant leap in performance was observed at the 145th epoch [\ref{fig:i}]. Agents demonstrated remarkable efficiency by removing almost all targets in fewer than 500 steps, with the last remaining target eliminated in the final steps of the episode. Concurrently, the loss function exhibited a notable pattern. While initially showing spikes when agents were rewarded values exceeding 1.0 [\ref{fig:h}], the loss gradually minimized and stabilized near zero after the 100th epoch [\ref{fig:l}].
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{img/mean_reward_1_epoch.png}
+      \caption{Mean Reward Epoch 1}
+      \label{fig:d}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{img/mean_reward_70_epoch.png}
+      \caption{Mean Reward Epoch 70}
+      \label{fig:e}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{img/mean_reward_145_epoch.png}
+      \caption{Mean Reward Epoch 145} 
+      \label{fig:f}
+  \end{subfigure}
+  \caption{Mean rewards}
+\end{figure}
+
+\subsubsection{Evaluation Results}
 
 \begin{figure}
   \centering
@@ -466,31 +466,28 @@ To assess the agents' performance in practical scenarios, we conducted evaluatio
       \centering
       \includegraphics[width=\textwidth]{img/1_agent_1.png}
       \caption{Beginning of simulation}
-      \label{fig:s_mer}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/1_agent_2.png}
       \caption{Half simulation}
-      \label{fig:s_mel}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/1_agent_3.png}
       \caption{End of simulation} 
-      \label{fig:s_ser}
   \end{subfigure}
   \caption{Different stages of a simulation with one agent and 8 targets}
-  \label{fig:t}
+  \label{fig:m}
 \end{figure}
 
-In a more challenging scenario with four agents and fourteen targets, the outcomes were as follows:
+To assess the agents' performance in practical scenarios, I conducted evaluations with varying numbers of agents and targets. In a scenario involving one agent and eight targets [\ref{fig:m}], the results indicated the following:
 \begin{itemize}
-  \item Agents demonstrated improved collaboration, taking an average of about 400 steps to clear all fourteen targets.
-  \item The first target was removed in an average of 10 steps, emphasizing swift task initiation.
-  \item Removal of half the targets was achieved in approximately 240 steps, showcasing efficient teamwork among agents.
+  \item On average, it took approximately 10 steps for the agent to remove the first target, reflecting a quick initiation of the cleaning process [\ref{fig:d}].
+  \item Removal of half the targets occurred, on average, in approximately 170 steps, demonstrating consistent progress [\ref{fig:e}].
+  \item To remove all eight targets, agents required an average of around 1440 steps, highlighting the complexity of clearing the entire environment [\ref{fig:f}].
 \end{itemize}
 
 \begin{figure}
@@ -499,46 +496,62 @@ In a more challenging scenario with four agents and fourteen targets, the outcom
       \centering
       \includegraphics[width=\textwidth]{img/4_agents_1.png}
       \caption{Beginning of simulation}
-      \label{fig:s_mer}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/4_agents_2.png}
       \caption{Half simulation}
-      \label{fig:s_mel}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/4_agents_3.png}
       \caption{End of simulation} 
-      \label{fig:s_ser}
   \end{subfigure}
   \caption{Different stages of a simulation with four agent and 14 targets}
-  \label{fig:t}
+  \label{fig:n}
 \end{figure}
 
+In a more challenging scenario with four agents and fourteen targets [\ref{fig:n}], the outcomes were as follows:
+\begin{itemize}
+  \item Agents demonstrated improved collaboration, taking an average of about 400 steps to clear all fourteen targets.
+  \item The first target was removed in an average of 10 steps, emphasizing swift task initiation.
+  \item Removal of half the targets was achieved in approximately 240 steps, showcasing efficient teamwork among agents.
+\end{itemize}
 
-These performance results underscore the adaptability and learning capabilities of our MLP network-based agents in the Cleaning Agents scenario. As training progressed, agents demonstrated a substantial improvement in their task execution, achieving efficient target removal even in scenarios with multiple agents and numerous targets. These findings reflect the effectiveness of our reinforcement learning approach in addressing complex multi-agent coordination tasks.
+\begin{figure}
+\includegraphics[width=\textwidth]{img/active-targets-per-step.png}
+\caption{Remaining targets at each step}
+\label{fig:o}
+\end{figure}
+
+These performance results underscore the adaptability and learning capabilities of my MLP network-based agents in the Cleaning Agents scenario. As training progressed, agents demonstrated a substantial improvement in their task execution, achieving efficient target removal even in scenarios with multiple agents and numerous targets [\ref{fig:o}].
+These findings reflect the effectiveness of my reinforcement learning approach in addressing complex multi-agent coordination tasks.
 
 \subsection{Performance Results: LSTM RNN Networks in the Cleaning Agents Scenario}
 
-The evaluation of LSTM Recurrent Neural Network (RNN)-based agents in the Cleaning Agents scenario yielded intriguing insights into their learning dynamics and performance. Employing the same training configuration of 150 epochs, each consisting of 1000 steps as with the MLP networks, I conducted a rigorous assessment of the LSTM RNN agents.
+The evaluation of LSTM Recurrent Neural Network (RNN)-based agents in the Cleaning Agents scenario provided valuable insights into their learning dynamics and performance. In this scenario, where the environment is partially observable and non-Markovian, the use of LSTM RNNs becomes particularly relevant, as they can capture temporal dependencies and history in a way that traditional feedforward networks cannot.
+
+Employing the same training configuration of 150 epochs, each consisting of 1000 steps, as with the MLP networks, I conducted a rigorous assessment of the LSTM RNN agents. This approach was motivated by prior research \cite{4421430}\cite{4655239}\cite{Banchi_2018} that demonstrated the effectiveness of RNNs in handling non-Markovian environments.
 
 \subsubsection{Training Challenges}
 
-One distinctive characteristic that emerged during the training of LSTM RNN agents was the instability of the loss function throughout the entire training process. Unlike the MLP networks, where the loss gradually stabilized, the LSTM RNN exhibited a highly erratic loss profile. This instability was indicative of the challenges faced by the agents in learning a coherent policy. Additionally, the performances of the agents appeared to be highly random, with outcomes seemingly influenced by previous actions, even when those actions resulted in extremely negative rewards.
+One distinctive characteristic that emerged during the training of LSTM RNN agents was the instability of the loss function throughout the entire training process. Unlike the MLP networks, where the loss gradually stabilized, the LSTM RNN exhibited a highly erratic loss profile. This instability was indicative of the challenges faced by the agents in learning a coherent policy in a non-Markovian environment. Prior studies (cite relevant research) have acknowledged similar difficulties in training RNNs for tasks with temporal dependencies.
+
+Additionally, the performances of the agents appeared to be highly random, with outcomes seemingly influenced by previous actions, even when those actions resulted in extremely negative rewards. This behavior underscores the need for more advanced modeling techniques to capture the complex temporal relationships in the Cleaning Agents scenario.
 
 \subsubsection{Evaluation Uncertainty}
 
 The evaluation phase of LSTM RNN agents presented significant challenges as well. The results obtained during evaluation were notably unreliable and inconsistent. It became apparent that the agents' performances were largely unpredictable, often influenced by casual factors rather than the effectiveness of the model itself. Even after multiple attempts and evaluations, the LSTM RNN-based agents consistently struggled to achieve the desired task of removing all targets within the Cleaning Agents scenario.
 
+This unpredictability further highlights the non-Markovian nature of the scenario, where past actions and states play a significant role in shaping future behavior.
+
 \subsubsection{Ongoing Difficulties}
 
-Despite numerous iterations and training efforts, the LSTM RNN agents faced persistent difficulties in mastering the Cleaning Agents scenario. The model's inherent complexity and the recurrent nature of the networks seemed to introduce challenges in learning a stable and effective policy. The highly variable and unpredictable outcomes during evaluation indicated a significant gap in performance compared to the MLP network-based agents.
+Despite numerous iterations and training efforts, the LSTM RNN agents faced persistent difficulties in mastering the Cleaning Agents scenario. The model's inherent complexity and the recurrent nature of the networks seemed to introduce challenges in learning a stable and effective policy for tasks with non-Markovian dependencies. The highly variable and unpredictable outcomes during evaluation indicated a significant gap in performance compared to the MLP network-based agents.
 
-In conclusion, the LSTM RNN-based agents in the Cleaning Agents scenario encountered substantial challenges in training and evaluation. The instability of the loss function, coupled with erratic agent performances, raised concerns about the suitability of this architecture for the task. Despite repeated attempts, the agents were unable to consistently achieve the goal of removing all targets, highlighting the need for further investigation and potentially alternative approaches in addressing the complexities of multi-agent coordination tasks in this scenario.
+In conclusion, the use of LSTM RNN-based agents in the Cleaning Agents scenario, which features a partially observable and non-Markovian environment, encountered substantial challenges in training and evaluation. The instability of the loss function, coupled with erratic agent performances, raised concerns about the suitability of this architecture for the task. Despite repeated attempts, the agents were unable to consistently achieve the goal of removing all targets, highlighting the need for further investigation and potentially alternative approaches in addressing the complexities of multi-agent coordination tasks in this scenario.
 
 \newpage
 
