@@ -1,9 +1,31 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces CTCE System \blx@tocontentsinit {0}\cite {aguzzi}\relax }}{8}{figure.caption.3}%
-\contentsline {figure}{\numberline {2}{\ignorespaces DTDE System \blx@tocontentsinit {0}\cite {aguzzi}\relax }}{8}{figure.caption.4}%
-\contentsline {figure}{\numberline {3}{\ignorespaces CTDE System \blx@tocontentsinit {0}\cite {aguzzi}\relax }}{9}{figure.caption.5}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Reward and Loss comparison\relax }}{18}{figure.caption.6}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Mean rewards\relax }}{19}{figure.caption.7}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Different stages of a simulation with one agent and 8 targets\relax }}{20}{figure.caption.8}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Different stages of a simulation with four agent and 14 targets\relax }}{21}{figure.caption.9}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Remaining targets at each step\relax }}{22}{figure.caption.10}%
-\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces \ac {rl} steps\relax }}{4}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Types of \ac {rl}\relax }}{4}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Applications of \ac {rl}\relax }}{5}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Q-learning and Deep Q-learning architecture\relax }}{7}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces CTCE System \blx@tocontentsinit {0}\cite {aguzzi}\relax }}{13}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces DTDE System \blx@tocontentsinit {0}\cite {aguzzi}\relax }}{13}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces CTDE System \blx@tocontentsinit {0}\cite {aguzzi}\relax }}{14}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces ScaRLib main modules \blx@tocontentsinit {0}\cite {scarlib}\relax }}{15}{figure.caption.20}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces ScaRLib{} Core Architecture \blx@tocontentsinit {0}\cite {scarlib}\relax }}{16}{figure.caption.22}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Examples of Developed System Dynamics. On the left, a centralized system with a global learner updating a shared policy. On the right, a decentralized system where each agent has a local policy and learner.\relax }}{17}{figure.caption.23}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces ScaRLib{} \texttt {alchemist-scafi} architecture. A \texttt {ScafiProgram} should be passed to the \texttt {AlchemistEnvironment} to initiate the learning process.\relax }}{18}{figure.caption.25}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces An Alchemist simulation example. The simulation result on the right is obtained by running the simulation described on the left.\relax }}{19}{figure.caption.26}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces \ac {vmas} architecture\relax }}{21}{figure.caption.28}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Scenarios introduced by \ac {vmas}\relax }}{23}{figure.caption.32}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Perfomance comparison of \ac {vmas} and MPE\relax }}{24}{figure.caption.33}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Benchmarking of four different \ac {rl} algorithms on VMAS scenarios\relax }}{25}{figure.caption.34}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces UML class diagram showing the scarlib-vmas module structure\relax }}{36}{figure.caption.46}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Dashboard with the results of a simulation\relax }}{39}{figure.caption.47}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces \ac {vmas} and Alchemist performances on different configurations of the Cohesion and Collision scenario\relax }}{47}{figure.caption.49}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Reward and Loss comparison\relax }}{50}{figure.caption.55}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Mean rewards\relax }}{51}{figure.caption.56}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Different stages of a simulation with one agent and 8 targets\relax }}{52}{figure.caption.58}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Different stages of a simulation with four agent and 14 targets\relax }}{53}{figure.caption.59}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Remaining targets at each step\relax }}{54}{figure.caption.60}%
+\addvspace {10\p@ }
